@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+
+{% load humanize %}
+
+{% block title %} | Welcome {% endblock %}
+
+{% block content %}
+
+<section id="showcase">
+    <div class="container">
+        <div class="search-bar p-5">
+            <h2 class="mb-4 text-center text-dark">
+                Apartment Renting Just Got So Easy
+            </h2>
+            <p class="lead text-dark">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Necessitatibus dolorem
+                tempore
+                dignissimos! At, mollitia laboriosam!</p>
+
+            <div class="search-form">
+                <form action="{% url 'search' %}">
+                    <!-- Form Row 1 -->
+                    <div class="form-row">
+                        <div class="col-md-4 mb-3">
+                            <label class="sr-only">Keywords</label>
+                            <input type="text" name="keywords" class="form-control"
+                                placeholder="Keyword (Pool, Gym, etc)">
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label class="sr-only">Sub-district</label>
+                            <input type="text" name="sub_district" class="form-control" placeholder="Sub-district">
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label class="sr-only">Location</label>
+                            <select name="location" class="form-control">
+                                <option selected="true" disabled="disabled">Location: (All)</option>
+                                {% for key, value in location_choices.items %}
+                                <option value="{{key}}">{{value}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <!-- Form Row 2 -->
+                    <div class="form-row">
+                        <div class="col-md-6 mb-3">
+                            <label class="sr-only">Type</label>
+                            <select name="unit_type" class="form-control">
+                                <option selected="true" disabled="disabled">Type</option>
+                                {% for key, value in unit_type_choices.items %}
+                                <option value="{{key}}">{{value}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <select name="price_per_month" class="form-control" id="type">
+                                <option selected="true" disabled="disabled">Max Price (Any)</option>
+                                {% for key, value in price_per_month_choices.items %}
+                                <option value="{{key}}">{{value}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-block mt-4" type="submit">Submit form</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Alerts -->
+{% include 'partials/_alerts.html' %}
+
+<!-- Listings -->
+<section id="listings" class="py-5">
+    <div class="container">
+        <h3 class="text-center mb-3">Latest Listings</h3>
+        <div class="row">
+            {% if listings %}
+            {% for listing in listings %}
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card listing-preview shadow-sm">
+                    <img class="card-img-top" src="{{listing.photo_main.url}}" alt="">
+                    <div class="card-img-overlay">
+                        <h2>
+                            <span class="badge badge-secondary bg-primary">Rp {{ listing.price_per_month | intcomma }}/month</span>
+                        </h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="listing-heading text-center">
+                            <h4 class="text-primary">{{ listing.name }}</h4>
+                            <p>
+                                <i class="fas fa-map-marker text-secondary"></i> {{ listing.sub_district }} - {{ listing.location }}
+                            </p>
+                        </div>
+                        <hr>
+                        <div class="row py-2 text-secondary">
+                            <div class="col-6">
+                                <i class="fas fa-th-large"></i> Sqft: {{ listing.sqft }}
+
+                            </div>
+                            <div class="col-6">
+                                <i class="fas fa-cube"></i> Type: {{ listing.unit_type }}
+                            </div>
+                        </div>
+                        <div class="row py-2 text-secondary">
+                            <div class="col-6">
+                                <i class="fas fa-building"></i> Floor/View: {{ listing.floor_view }}
+                            </div>
+                            <div class="col-6">
+                                <i class="fas fa-couch"></i> Condition: {{ listing.condition }}
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row py-2 text-secondary">
+                            <div class="col-6">
+                                <i class="fas fa-user"></i> {{ listing.realtor }}
+                            </div>
+                        </div>
+                        <div class="row text-secondary pb-2">
+                            <div class="col-6">
+                                <i class="fas fa-clock"></i> {{ listing.list_date | timesince }}
+                            </div>
+                        </div>
+                        <hr>
+                        <a href="{% url 'listing' listing.id %}" class="btn btn-primary btn-block">More Info</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <div class="col-md-12">
+                <p>No Listings Available</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}

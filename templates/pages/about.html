@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %} | About {% endblock %}
+
+{% block content %}
+
+<section id="showcase-inner" class="py-5">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-12">
+                <h1 class="display-4">About redline</h1>
+                <p class="lead">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sunt, pariatur!</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Breadcrumb -->
+<section id="bc" class="mt-3">
+    <div class="container">
+        <nav aria-label="breadcrumb" class="shadow-sm">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{% url 'index' %}">
+                        <i class="fas fa-home"></i> Home</a>
+                </li>
+                <li class="breadcrumb-item active"> About</li>
+            </ol>
+        </nav>
+    </div>
+</section>
+
+<section id="about" class="py-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <h2>Offering you the best apartment units to rent!</h2>
+                <p class="lead">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sunt, pariatur!</p>
+                <img src="{% static 'img/about.jpg' %}" alt="">
+                <p class="mt-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis esse officia
+                    repudiandae ad saepe ex, amet
+                    neque quod accusamus rem quia magnam magni dolorum facilis ullam minima perferendis?
+                    Exercitationem at quaerat
+                    commodi id libero eveniet harum perferendis laborum molestias quia.</p>
+                <p class="mt-4">
+                    Aliquam suscipit dolorem aut quisquam perspiciatis officiis obcaecati dolore ab perferendis est unde
+                    rem eos voluptate architecto quos veniam accusamus ullam praesentium voluptatem culpa voluptatibus,
+                    eveniet laboriosam sapiente eius! Quidem, sed quibusdam.
+                </p>
+                <p class="mt-4">
+                    Rerum obcaecati facere, dicta mollitia non fugit? Nulla hic voluptates vero cupiditate eligendi.
+                    Culpa fugiat corporis fuga doloremque, quo magni nulla quidem vero sed laudantium ullam
+                    consequuntur. Corrupti labore alias officia distinctio veritatis, laboriosam aliquid molestias,
+                    incidunt ducimus repudiandae earum facere culpa enim. Odit ducimus possimus autem voluptatibus harum
+                    aliquam, dignissimos, omnis neque perspiciatis quas, voluptatum dolorem voluptatem alias et
+                    recusandae reprehenderit.
+                </p>
+            </div>
+            <div class="col-md-4">
+                {% if mvp_realtors %}
+                {% for realtor in mvp_realtors %}
+                <div class="card shadow-sm">
+                    <img class="card-img-top" src="{{realtor.photo.url}}" alt="Seller of the month">
+                    <div class="card-body">
+                        <h5 class="card-title">Seller Of The Month</h5>
+                        <h6 class="text-danger">{{realtor.name}}</h6>
+                        <p class="card-text">{{realtor.description}}</p>
+                    </div>
+                </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Work -->
+<section id="work" class="bg-dark text-white text-center">
+    <h2 class="display-4">We Work For You</h2>
+    <h4>Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem velit aperiam, unde aliquid at similique!
+    </h4>
+    <hr>
+    <a href="{% url 'listings' %}" class="btn bg-primary btn-lg">View Our Featured Listings</a>
+</section>
+
+<!-- Team -->
+<section id="team" class="py-5">
+    <div class="container">
+        <h2 class="text-center">Our Team</h2>
+        <div class="row text-center">
+            {% if realtors %}
+            {% for realtor in realtors %}
+            <div class="col-md-4">
+                <img src="{{realtor.photo.url}}" alt="" class="rounded-circle mb-3">
+                <h4>{{realtor.name}}</h4>
+                <p class="text-primary">
+                    <i class="fas fa-award text-primary mb-3"></i> Realtor
+                </p>
+                <hr>
+                <p>
+                    <i class="fas fa-phone"></i> {{realtor.phone}}
+                </p>
+                <p>
+                    <i class="fas fa-envelope-open"></i> {{realtor.email}}
+                </p>
+            </div>
+            {% endfor %}
+            {% else %}
+            <div class="col-md-12">
+                <p>No Realtors Available</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}
