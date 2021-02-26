@@ -1,1 +1,1 @@
-web: gunicorn redline.wsgi
+web: gunicorn redline.wsgi --log-file -
